@@ -8,7 +8,6 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
-import TodoPageComponent from './Todo/TodoPageComponent';
 import { ServicePageComponent } from './Service/Components/ServicePageComponent';
 import { Route, Switch, Redirect, useLocation, useHistory } from 'react-router-dom';
 import Nav from './Nav';
@@ -57,9 +56,6 @@ function App() {
         <Switch>
             <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
             <Route exact path="/" component={ServicePageComponent} />
-            <Route path="/todos" component={TodoPageComponent} />
-            <Route path="/calendar" component={CalendarPageComponent} />
-            <Route path="/weather" component={WeatherForecastComponent} />
             <Route path="/login" component={LoginComponent} />
             <Redirect from="*" to="/" />
         </Switch>
