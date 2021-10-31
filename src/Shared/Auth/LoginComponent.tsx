@@ -63,8 +63,8 @@ export function LoginComponent(props:any) {
             };
 
             service.login(credentials).then(() => {
-                props.history.push("/weather");
-                window.location.reload();
+                props.history.push("/");  
+                eventBus.dispatch("loggedIn", null);
             }, (err) => {
                 let backendError = (err.response && err.response.data && err.response.data.message) 
                     || err.message || err.toString();
