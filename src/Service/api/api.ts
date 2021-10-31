@@ -36,16 +36,16 @@ export interface IMessageTypeDeleteDto {
 
 export class ServiceApi {
     getItems(): Promise<IService[]> {
-        return apiBase.get<IServiceRoot>('Service/Get').then(d => d.data.root);
+        return apiBase.get<IServiceRoot>('Service').then(d => d.data.root);
     }
 
     insertService(item:IServiceCreateDto): Promise<AxiosResponse<any>> {
-        return apiBase.post('Service/Create', item);
+        return apiBase.post('Service', item);
     }
 
     deleteService(id:string): Promise<AxiosResponse<any>> {
-        const url = `Service/Delete/${id}`;
-        return apiBase.post(url);
+        const url = `Service/${id}`;
+        return apiBase.delete(url);
     }
 
     getMessageTypes(id:string): Promise<IMessageType[]> {
