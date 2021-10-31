@@ -24,8 +24,6 @@ export function UserBarComponent(props:any) {
     useEffect(() => {
         eventBus.on("loggedIn", (e:any) => {
             const user = TokenService.getUser();
-            console.log(user);
-            console.log(user?.userName);
             setName(user?.userName || "haha");
         });
         
