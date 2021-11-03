@@ -22,9 +22,12 @@ export function UserBarComponent(props:any) {
     ];
 
     useEffect(() => {
+        const user = TokenService.getUser();
+        setName(user?.userName || "");
+
         eventBus.on("loggedIn", (e:any) => {
             const user = TokenService.getUser();
-            setName(user?.userName || "haha");
+            setName(user?.userName || "");
         });
         
         return () => {
