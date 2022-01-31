@@ -39,7 +39,7 @@ export class ServiceApi {
         return apiBase.post('Service', item);
     }
 
-    deleteService(id:string): Promise<AxiosResponse<any>> {
+    deleteService(id:number): Promise<AxiosResponse<any>> {
         const url = `Service/${id}`;
         return apiBase.delete(url);
     }
