@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ITopic } from '../../api/api';
-import './MessageTypesListComponent.css';
+import './TopicsListComponent.css';
 
 const styles = {
     ul: {
@@ -17,7 +17,7 @@ const styles = {
 }
 type SetCurrentType = (item:ITopic) => void; //todo shared generic
 type PropType = {items:ITopic[]|undefined, current:ITopic|undefined, setCurrent:SetCurrentType} //shared generic?
-export function MessageTypesListComponent(props:PropType) {
+export function TopicsListComponent(props:PropType) {
 
     const itemTemplate = (item:ITopic) => {
         return (

@@ -6,12 +6,12 @@ import React, {useContext, useState, useEffect} from 'react';
 import Spinner from '../../../Shared/Components/Spinner/Spinner';
 import useLoading from '../../../Shared/Hooks/useLoading';
 import { ITopic, ITopicCreateDto, IService, ServiceApi } from '../../api/api'
-import MessageTypeFormComponent from './MessageTypeFormComponent';
-import { MessageTypesListComponent } from './MessageTypesListComponent';
+import TopicFormComponent from './TopicFormComponent';
+import { TopicsListComponent } from './TopicsListComponent';
 
 
 type PropType = {currentItem:IService|undefined}
-export default function MessageTypesPageComponent(props:PropType) {
+export default function TopicsPageComponent(props:PropType) {
     const [types, setTypes] = useState<ITopic[]>();
     const [current, setCurrent] = useState<ITopic>();
     const [doRefresh, isLoading] = useLoading(refresh);
@@ -79,7 +79,7 @@ export default function MessageTypesPageComponent(props:PropType) {
         }
         else return (
             <React.Fragment>
-                <MessageTypesListComponent items={items} current={current} setCurrent={setCurrent}/>
+                <TopicsListComponent items={items} current={current} setCurrent={setCurrent}/>
             </React.Fragment>
         )
     }
@@ -105,7 +105,7 @@ export default function MessageTypesPageComponent(props:PropType) {
     return (
         <React.Fragment>
             <Dialog header="Добавить тип сообщений" visible={isAdding} style={{ width: '50vw' }} onHide={() => setIsAdding(false)}>
-                <MessageTypeFormComponent serviceId={props.currentItem?.key} onResult={onAddingFormAction}/>
+                <TopicFormComponent serviceId={props.currentItem?.key} onResult={onAddingFormAction}/>
             </Dialog>
             <div className="col-12">
                 <div className="row">

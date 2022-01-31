@@ -7,7 +7,7 @@ type PropType= {
     serviceId:number|undefined;
     onResult:(item:ITopicCreateDto) => void
 }
-export default function MessageTypeFormComponent(props:PropType) {
+export default function TopicFormComponent(props:PropType) {
     const [name, setName] = useState<string>();
     const [solve, setSolve] = useState<boolean>(false);
 
