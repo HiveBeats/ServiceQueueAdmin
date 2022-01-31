@@ -14,7 +14,7 @@ export interface IService {
 
 export interface IServiceCreateDto{
     name: string,
-    parentId: string
+    parentId: number
 }
 
 export interface IMessageType {
