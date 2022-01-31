@@ -49,15 +49,15 @@ export class ServiceApi {
     }
 
     getMessageTypes(id:string): Promise<IMessageType[]> {
-        const url = `Service/Get/${id}/MessageTypes`;
+        const url = `Queue/Topic?serviceId=${id}`;
         return apiBase.get<IMessageType[]>(url).then(d => d.data);
     }
 
     createMessageType(item:IMessageTypeCreateDto): Promise<AxiosResponse<any>> {
-        return apiBase.post('Service/CreateMessageType', item);
+        return apiBase.post('Queue/Topic', item);
     }
 
     deleteMessageType(item:IMessageTypeDeleteDto): Promise<AxiosResponse<any>> {
-        return apiBase.post('Service/DeleteMessageType', item);
+        return apiBase.post(`Queue/Topic/${item}`, item);
     }
 }
