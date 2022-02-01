@@ -1,13 +1,13 @@
 import { InputText } from "primereact/inputtext";
 import React, {useState} from "react";
-import { IMessageTypeCreateDto } from "../../api/api";
+import { ITopicCreateDto } from "../../api/api";
 import {Checkbox} from 'primereact/checkbox';
 
 type PropType= {
-    serviceId:string|undefined;
-    onResult:(item:IMessageTypeCreateDto) => void
+    serviceId:number|undefined;
+    onResult:(item:ITopicCreateDto) => void
 }
-export default function MessageTypeFormComponent(props:PropType) {
+export default function TopicFormComponent(props:PropType) {
     const [name, setName] = useState<string>();
     const [solve, setSolve] = useState<boolean>(false);
 

@@ -5,15 +5,15 @@ import { Toolbar } from 'primereact/toolbar';
 import React, {useContext, useState, useEffect} from 'react';
 import Spinner from '../../../Shared/Components/Spinner/Spinner';
 import useLoading from '../../../Shared/Hooks/useLoading';
-import { IMessageType, IMessageTypeCreateDto, IService, ServiceApi } from '../../api/api'
-import MessageTypeFormComponent from './MessageTypeFormComponent';
-import { MessageTypesListComponent } from './MessageTypesListComponent';
+import { ITopic, ITopicCreateDto, IService, ServiceApi } from '../../api/api'
+import TopicFormComponent from './TopicFormComponent';
+import { TopicsListComponent } from './TopicsListComponent';
 
 
 type PropType = {currentItem:IService|undefined}
-export default function MessageTypesPageComponent(props:PropType) {
-    const [types, setTypes] = useState<IMessageType[]>();
-    const [current, setCurrent] = useState<IMessageType>();
+export default function TopicsPageComponent(props:PropType) {
+    const [types, setTypes] = useState<ITopic[]>();
+    const [current, setCurrent] = useState<ITopic>();
     const [doRefresh, isLoading] = useLoading(refresh);
     const [isAdding, setIsAdding] = useState<boolean>(false);
     const apiService = new ServiceApi();
@@ -27,7 +27,7 @@ export default function MessageTypesPageComponent(props:PropType) {
             return Promise.reject();
 
         setCurrent(undefined);
-        return apiService.getMessageTypes(props.currentItem?.key||'').then(data => {
+        return apiService.getTopics(props.currentItem?.key).then(data => {
             setTypes(data);
         })
         .catch(e => console.log(e));
@@ -51,11 +51,7 @@ export default function MessageTypesPageComponent(props:PropType) {
         if (!current || !props.currentItem)
             return;
 
-        const deleteDto = {
-            service: props.currentItem?.key,
-            name: current.name
-        }
-        apiService.deleteMessageType(deleteDto).then(d => {
+        apiService.deleteTopic(current.id).then(d => {
             doRefresh();
         })
         .catch((e) => {
@@ -63,8 +59,8 @@ export default function MessageTypesPageComponent(props:PropType) {
         });
     }
 
-    function onAddingFormAction(item: IMessageTypeCreateDto) {
-        apiService.createMessageType(item).then(d => {
+    function onAddingFormAction(item: ITopicCreateDto) {
+        apiService.createTopic(item).then(d => {
             setIsAdding(false);
             doRefresh();
         })
@@ -73,7 +69,7 @@ export default function MessageTypesPageComponent(props:PropType) {
         });
     }
 
-    const renderItems = (items:IMessageType[]|undefined, isLoading:boolean, setCurrent:(item:IMessageType)=> void) => {
+    const renderItems = (items:ITopic[]|undefined, isLoading:boolean, setCurrent:(item:ITopic)=> void) => {
         if (isLoading && props.currentItem) {
             return (
                 <React.Fragment>
@@ -83,7 +79,7 @@ export default function MessageTypesPageComponent(props:PropType) {
         }
         else return (
             <React.Fragment>
-                <MessageTypesListComponent items={items} current={current} setCurrent={setCurrent}/>
+                <TopicsListComponent items={items} current={current} setCurrent={setCurrent}/>
             </React.Fragment>
         )
     }
@@ -109,7 +105,7 @@ export default function MessageTypesPageComponent(props:PropType) {
     return (
         <React.Fragment>
             <Dialog header="Добавить тип сообщений" visible={isAdding} style={{ width: '50vw' }} onHide={() => setIsAdding(false)}>
-                <MessageTypeFormComponent serviceId={props.currentItem?.key} onResult={onAddingFormAction}/>
+                <TopicFormComponent serviceId={props.currentItem?.key} onResult={onAddingFormAction}/>
             </Dialog>
             <div className="col-12">
                 <div className="row">

@@ -15,7 +15,7 @@ export default function ServiceFormComponent(props:PropType) {
         e.preventDefault();
         const addingService = {
             name:name||'',
-            parentId:parent
+            parentId:Number(parent)
         };
         props.onResult(addingService);
     };

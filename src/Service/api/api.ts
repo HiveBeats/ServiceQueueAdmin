@@ -6,7 +6,7 @@ export interface IServiceRoot {
 }
 
 export interface IService {
-    key: string,
+    key: number,
     label: string,
     icon: string,
     children: IService[]
@@ -14,24 +14,20 @@ export interface IService {
 
 export interface IServiceCreateDto{
     name: string,
-    parentId: string
+    parentId: number
 }
 
-export interface IMessageType {
+export interface ITopic {
+    id: number,
     name: string,
-    serviceId: string,
+    serviceId: number,
     solveByReading: boolean,
 }
 
-export interface IMessageTypeCreateDto {
+export interface ITopicCreateDto {
     name: string,
-    serviceId: string,
+    serviceId: number,
     solveByReading: boolean
-}
-
-export interface IMessageTypeDeleteDto {
-    service: string,
-    name: string
 }
 
 export class ServiceApi {
@@ -43,21 +39,21 @@ export class ServiceApi {
         return apiBase.post('Service', item);
     }
 
-    deleteService(id:string): Promise<AxiosResponse<any>> {
+    deleteService(id:number): Promise<AxiosResponse<any>> {
         const url = `Service/${id}`;
         return apiBase.delete(url);
     }
 
-    getMessageTypes(id:string): Promise<IMessageType[]> {
-        const url = `Service/Get/${id}/MessageTypes`;
-        return apiBase.get<IMessageType[]>(url).then(d => d.data);
+    getTopics(id:number): Promise<ITopic[]> {
+        const url = `Queue/Topic?serviceId=${id}`;
+        return apiBase.get<ITopic[]>(url).then(d => d.data);
     }
 
-    createMessageType(item:IMessageTypeCreateDto): Promise<AxiosResponse<any>> {
-        return apiBase.post('Service/CreateMessageType', item);
+    createTopic(item:ITopicCreateDto): Promise<AxiosResponse<any>> {
+        return apiBase.post('Queue/Topic', item);
     }
 
-    deleteMessageType(item:IMessageTypeDeleteDto): Promise<AxiosResponse<any>> {
-        return apiBase.post('Service/DeleteMessageType', item);
+    deleteTopic(id:number): Promise<AxiosResponse<any>> {
+        return apiBase.delete(`Queue/Topic/${id}`);
     }
 }

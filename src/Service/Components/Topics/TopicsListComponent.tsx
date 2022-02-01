@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IMessageType } from '../../api/api';
-import './MessageTypesListComponent.css';
+import { ITopic } from '../../api/api';
+import './TopicsListComponent.css';
 
 const styles = {
     ul: {
@@ -15,11 +15,11 @@ const styles = {
         width:'100%'
     }
 }
-type SetCurrentType = (item:IMessageType) => void; //todo shared generic
-type PropType = {items:IMessageType[]|undefined, current:IMessageType|undefined, setCurrent:SetCurrentType} //shared generic?
-export function MessageTypesListComponent(props:PropType) {
+type SetCurrentType = (item:ITopic) => void; //todo shared generic
+type PropType = {items:ITopic[]|undefined, current:ITopic|undefined, setCurrent:SetCurrentType} //shared generic?
+export function TopicsListComponent(props:PropType) {
 
-    const itemTemplate = (item:IMessageType) => {
+    const itemTemplate = (item:ITopic) => {
         return (
             <div className={item.name === props.current?.name ? 'list-item list-item-selected':'list-item'} onClick={(e) => props.setCurrent(item)}>
                     <span className="p-mb-2">{item.name}</span>
