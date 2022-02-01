@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ServiceContext } from '../Context/ServiceContext';
-import TopicsPageComponent from './MessageTypes/TopicsPageComponent';
+import TopicsPageComponent from './Topics/TopicsPageComponent';
 
 export default function ServiceDetailPageComponent() {
 
