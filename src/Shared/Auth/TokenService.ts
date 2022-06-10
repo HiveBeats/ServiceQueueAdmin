@@ -1,8 +1,7 @@
 
 export interface IUser {
-  accessToken?: string;
-  refreshToken?: string;
   userName?: string;
+  role?: string;
 }
 
 const getUser = (): IUser|null => {
@@ -10,32 +9,6 @@ const getUser = (): IUser|null => {
   if (userData)
       return JSON.parse(userData);
   else return null;
-};
-
-const getLocalRefreshToken = (): string|undefined => {
-  return getUser()?.refreshToken;
-};
-  
-const getLocalAccessToken = (): string|undefined => {
-  return getUser()?.accessToken;
-};
-  
-const updateLocalAccessToken = (token: string) => {
-  let user = getUser();
-  if (user && token)
-  {
-      user.accessToken = token;
-      setUser(user);
-  }
-};
-
-const updateLocalRefreshToken = (token: string) => {
-  let user = getUser();
-  if (user && token)
-  {
-      user.refreshToken = token;
-      setUser(user);
-  }
 };
   
 const setUser = (user: IUser) => {
@@ -48,10 +21,6 @@ const removeUser = () => {
 };
   
 const TokenService = {
-  getLocalRefreshToken,
-  getLocalAccessToken,
-  updateLocalAccessToken,
-  updateLocalRefreshToken,
   getUser,
   setUser,
   removeUser,

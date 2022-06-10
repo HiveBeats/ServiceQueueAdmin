@@ -14,10 +14,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = TokenService.getLocalAccessToken();
-    if (token) {
-      config.headers["Authorization"] = 'Bearer ' + token;
-    }
     return config;
   },
   (error) => {
@@ -44,6 +40,7 @@ instance.interceptors.response.use(
   
           try {
             const rs = await instance.post("Users/Auth/refresh-token");
+            //todo: then get user info and store on localstorage
             return instance(originalConfig);
           } catch (_error) {
             return Promise.reject(_error);

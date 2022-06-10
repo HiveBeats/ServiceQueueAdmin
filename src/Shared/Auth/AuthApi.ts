@@ -8,12 +8,6 @@ export interface RegisterRequest {
     password: string;
 }
 
-export interface RegisterResponse {
-    userName?: string;
-    accessToken?: string;
-    refreshToken?: string;
-}
-
 export interface LoginRequest {
     userName?: string;
     email?: string;
@@ -23,35 +17,31 @@ export interface LoginRequest {
 export interface LoginResponse {
     userName?: string;
     role?: string;
-    accessToken?: string;
-    refreshToken?: string;
-}
-
-export interface RefreshTokenRequest {
-    refreshToken: string;
-    userName?: string;
 }
 
 export class AuthApi {
     
-    register(credentials: RegisterRequest): Promise<RegisterResponse> {
-        return apiBase.post<RegisterResponse>('Users/Auth/Register', credentials).then(d => {
-            return d.data
-        });
+    register(credentials: RegisterRequest): Promise<any> {
+        return apiBase.post('Users/Auth/Register', credentials);
     }
 
     login(credentials: LoginRequest): Promise<LoginResponse> {
         return apiBase.post<LoginResponse>('Users/Auth/Login', credentials).then(d => {
-            return d.data
+            return this.getUserData();
         });
     }
 
-    logout() {
-        return apiBase.post('Users/Auth/logout');
+    logout(): Promise<any> {
+        return apiBase.post('Users/Auth/logout').then(d => {
+            TokenService.removeUser();
+        });
     }
 
     getUserData(): Promise<LoginResponse> {
-        return apiBase.get<LoginResponse>('Users/Auth/user').then(d => d.data);
+        return apiBase.get<LoginResponse>('Users/Auth/user').then(d => d.data).then(d => {
+            TokenService.setUser(d);
+            return d;
+        });
     }
 }
 
