@@ -32,9 +32,9 @@ instance.interceptors.response.use(
   async (err) => {
     const originalConfig = err.config;
 
-    if (originalConfig.url !== "Auth/Login" && err.response) {
+    if (originalConfig.url !== "Users/Auth/Login" && err.response) {
       // Refresh Token was not valid too
-      if (originalConfig.url === "/auth/refresh-token") {
+      if (originalConfig.url === "Users/Auth/refresh-token") {
         eventBus.dispatch("movetologin", null);
       }
       else {
@@ -43,21 +43,7 @@ instance.interceptors.response.use(
           originalConfig._retry = true;
   
           try {
-            const user = TokenService.getUser();
-            const rs = await instance.post("/auth/refresh-token", {
-              refreshToken: user?.refreshToken,
-              userName: user?.userName
-            });
-  
-            const accessToken = rs.data.accessToken;
-            TokenService.updateLocalAccessToken(accessToken);
-  
-            const refreshToken = rs.data.refreshToken;
-            TokenService.updateLocalRefreshToken(refreshToken);
-            
-            if (accessToken) {
-              originalConfig.headers["Authorization"] = 'Bearer ' + accessToken;
-            }
+            const rs = await instance.post("Users/Auth/refresh-token");
             return instance(originalConfig);
           } catch (_error) {
             return Promise.reject(_error);

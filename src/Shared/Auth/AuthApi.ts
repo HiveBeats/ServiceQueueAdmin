@@ -35,31 +35,23 @@ export interface RefreshTokenRequest {
 export class AuthApi {
     
     register(credentials: RegisterRequest): Promise<RegisterResponse> {
-        return apiBase.post<RegisterResponse>('Auth/Register', credentials).then(d => {
-            if (d.data) {
-                TokenService.setUser(d.data);
-            }
-
+        return apiBase.post<RegisterResponse>('Users/Auth/Register', credentials).then(d => {
             return d.data
         });
     }
 
     login(credentials: LoginRequest): Promise<LoginResponse> {
-        return apiBase.post<LoginResponse>('Auth/Login', credentials).then(d => {
-            if (d.data) {
-                TokenService.setUser(d.data);
-            }
-
+        return apiBase.post<LoginResponse>('Users/Auth/Login', credentials).then(d => {
             return d.data
         });
     }
 
     logout() {
-        TokenService.removeUser();
+        return apiBase.post('Users/Auth/logout');
     }
 
     getUserData(): Promise<LoginResponse> {
-        return apiBase.get<LoginResponse>('Auth/user').then(d => d.data);
+        return apiBase.get<LoginResponse>('Users/Auth/user').then(d => d.data);
     }
 }
 
